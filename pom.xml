@@ -10,33 +10,47 @@
   </parent>
 
 	<groupId>org.activiti.training</groupId>
-	<artifactId>sample-activiti7-runtime-bundle</artifactId>
+	<artifactId>sample-runtime-bundle</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sample-activiti7-runtime-bundle</name>
+	<name>sample-runtime-bundle</name>
 	<description>Demo project for Spring Boot</description>
   <properties>
+	<activiti-cloud-connectors.version>7.1.434</activiti-cloud-connectors.version>
     <activiti-cloud-runtime-bundle-service.version>7.1.434</activiti-cloud-runtime-bundle-service.version>
     <docker-maven-plugin.version>0.32.0</docker-maven-plugin.version>
     <activiti-cloud-messages-service.version>7.1.434</activiti-cloud-messages-service.version>
   </properties>
-  <scm>
-    <url>https://github.com/akryga/${project.artifactId}</url>
-    <connection>scm:git:https://github.com/akryga/${project.artifactId}.git</connection>
-    <developerConnection>scm:git:https://github.com/akryga/${project.artifactId}.git</developerConnection>
+<!--  <scm>
+    <url>https://github.com/akryga/sample-runtime-bundle.git</url>
+    <connection>scm:git:https://github.com/akryga/sample-runtime-bundle.git</connection>
+    <developerConnection>scm:git:https://github.com/akryga/sample-runtime-bundle.git</developerConnection>
     <tag>HEAD</tag>
-  </scm>	
+  </scm>	-->
   <dependencyManagement>
-	  <dependencies>
-      <dependency>
-        <groupId>org.activiti.cloud.rb</groupId>
-        <artifactId>activiti-cloud-runtime-bundle-dependencies</artifactId>
-        <version>${activiti-cloud-runtime-bundle-service.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
+	  <dependencies>      
+		  <dependency>
+	        <groupId>org.activiti.cloud.messages</groupId>
+	        <artifactId>activiti-cloud-messages-dependencies</artifactId>
+	        <version>${activiti-cloud-messages-service.version}</version>
+	        <scope>import</scope>
+	        <type>pom</type>
+	      </dependency>
+	      <dependency>
+	        <groupId>org.activiti.cloud.rb</groupId>
+	        <artifactId>activiti-cloud-runtime-bundle-dependencies</artifactId>
+	        <version>${activiti-cloud-runtime-bundle-service.version}</version>
+	        <scope>import</scope>
+	        <type>pom</type>
+	      </dependency>
 	  </dependencies>
   </dependencyManagement>
   <dependencies>
+	<dependency>
+      <groupId>org.activiti.cloud.connector</groupId>
+      <artifactId>activiti-cloud-connectors-dependencies</artifactId>
+      <version>${activiti-cloud-connectors.version}</version>
+      <type>pom</type>
+    </dependency>
     <dependency>
       <groupId>org.activiti.cloud.rb</groupId>
       <artifactId>activiti-cloud-starter-runtime-bundle</artifactId>
@@ -45,10 +59,10 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
     </dependency>
-<!--    <dependency>
+    <dependency>
       <groupId>org.activiti.cloud.messages</groupId>
       <artifactId>activiti-cloud-starter-messages-jdbc</artifactId>
-    </dependency>-->
+    </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
@@ -65,12 +79,12 @@
     </dependency>
 
     <!-- Marker Pom for Dependency Conversion Validation  -->
-    <dependency>
+<!--    <dependency>
       <groupId>org.activiti.cloud.rb</groupId>
       <artifactId>activiti-cloud-runtime-bundle-dependencies</artifactId>
       <version>${activiti-cloud-runtime-bundle-service.version}</version>
       <type>pom</type>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-parent</artifactId>
@@ -83,19 +97,11 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>pl.project13.maven</groupId>
-        <artifactId>git-commit-id-plugin</artifactId>
-        <configuration>
-          <verbose>false</verbose>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <executions>
           <execution>
             <goals>
-              <goal>build-info</goal>
             </goals>
           </execution>
         </executions>
